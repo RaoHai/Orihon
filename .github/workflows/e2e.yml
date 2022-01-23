@@ -36,17 +36,18 @@ jobs:
       matrix:
         # run copies of the current job in parallel
         containers: [1, 2, 3, 4, 5]
-    - name: "UI Tests - Chrome"
-        uses: cypress-io/github-action@v2
-        with:
-          start: yarn start:ci
-          wait-on: "http://localhost:3000"
-          wait-on-timeout: 120
-          browser: chrome
-          record: true
-          parallel: true
-          group: "UI - Chrome"
-          spec: cypress/integration/*
-        env:
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+    steps:
+        - name: "UI Tests - Chrome"
+          uses: cypress-io/github-action@v2
+          with:
+            start: yarn start:ci
+            wait-on: "http://localhost:3000"
+            wait-on-timeout: 120
+            browser: chrome
+            record: true
+            parallel: true
+            group: "UI - Chrome"
+            spec: cypress/integration/*
+          env:
+            CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+            CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
