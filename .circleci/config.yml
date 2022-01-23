@@ -1,19 +1,21 @@
 version: 2.1
 orbs:
-  node: circleci/node@5.0.0
-jobs:
-  build-and-test:
-    docker:
-      # replace with your preferred image
-      - image: cimg/node:17.4.0
-    steps:
-      - checkout
-      - node/install-yarn
-      - node/install-packages:
-          pkg-manager: yarn
-      - run: yarn build
-      - run: yarn e2e:headless
+  cypress: cypress-io/cypress@1
 workflows:
-  example-workflow:
+  build:
     jobs:
-      - build-and-test
+      # first get the source code and install npm dependencies
+      - cypress/install:
+          # run a custom app build step
+          build: 'npm run build'
+      - cypress/run:
+          # make sure app has been installed and built
+          # before running tests across multiple machines
+          # this avoids installing same dependencies 10 times
+          requires:
+            - cypress/install
+          record: true # record results on Cypress Dashboard
+          parallel: true # split all specs across machines
+          parallelism: 4 # use 4 CircleCI machines to finish quickly
+          group: 'all tests' # name this group "all tests" on the dashboard
+          start: 'npm start' # start server before running tests
