@@ -5,7 +5,7 @@ jobs:
   test:
     executor: 
         name: node/default
-        tag: "17"
+        tag: '16'
     steps:
       - restore_cache:
           name: Restore Yarn Package Cache
