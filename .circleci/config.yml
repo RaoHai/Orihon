@@ -2,10 +2,10 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.0
 jobs:
-  example-job:
+  build-and-test:
     docker:
       # replace with your preferred image
-      - image: cimg/base:stable
+      - image: cimg/node:17.4.0
     steps:
       - checkout
       - node/install-yarn
@@ -15,4 +15,4 @@ jobs:
 workflows:
   example-workflow:
     jobs:
-      - example-job
+      - build-and-test
