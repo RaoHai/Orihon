@@ -9,7 +9,8 @@ jobs:
     steps:
       - checkout
       - node/install-yarn
-      - node/install-packages
+      - node/install-packages:
+          pkg-manager: yarn
       - run: yarn build
       - run: yarn e2e:headless
 workflows:
