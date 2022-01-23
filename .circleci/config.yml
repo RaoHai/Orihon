@@ -19,7 +19,8 @@ jobs:
           paths:
             - .yarn/cache
             - .yarn/unplugged
-      - test: npm run test
+      - run:
+          npm run test
 
 workflows:
   test:
