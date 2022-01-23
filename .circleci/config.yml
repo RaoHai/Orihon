@@ -20,8 +20,8 @@ jobs:
             - .yarn/cache
             - .yarn/unplugged
       - run:
-          npm run build
-          npm run e2e
+          yarn build
+          yarn e2e:headless
 
 workflows:
   test:
