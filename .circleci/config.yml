@@ -1,11 +1,11 @@
 version: 2.1
-orbs:
-  node: circleci/node@4.5
 jobs:
   test:
-    executor: node/default
+    docker:
+      - image: cimg/node:17.4.0
     steps:
       - checkout
+      - run: node --version
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
@@ -19,7 +19,8 @@ jobs:
           paths:
             - .yarn/cache
             - .yarn/unplugged
-      - test: npm run test
+      - run:
+          npm run test
 
 workflows:
   test:
