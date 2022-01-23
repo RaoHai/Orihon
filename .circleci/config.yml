@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  test:
+  e2e:
     docker:
       - image: cimg/node:17.4.0
     steps:
@@ -20,9 +20,9 @@ jobs:
             - .yarn/cache
             - .yarn/unplugged
       - run:
-          npm run test
+          npm run e2e
 
 workflows:
   test:
     jobs:
-      - test
+      - e2e
