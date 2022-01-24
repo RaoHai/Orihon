@@ -8,7 +8,7 @@ A Cbeta Staticization Project.
   </a>
   <br/>
 
-  <a aria-label="License" href="https://github.com/RaoHai/orihon/blob/main/LICENSE">
+  <a aria-label="License" href="https://github.com/RaoHai/orihon/blob/master/LICENSE">
     <img alt="" src="https://badgen.net/github/license/RaoHai/orihon">
   </a>
 </p>
