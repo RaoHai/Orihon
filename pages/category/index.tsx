@@ -1,12 +1,6 @@
 import Link from "next/link";
+import { Category, getCategoryList } from "./utils/api";
 
-export interface Category {
-  title: string;
-  abbreviation: string;
-  'short-title-zh': string;
-  'title-zh': string;
-  volumes: number;
-}
 
 export interface MenuProps {
   categories: Record<string, Category>;
@@ -36,9 +30,12 @@ export default function Menu({ categories = {} }: MenuProps) {
   </>
 }
 
+/**
+ * genrate category menus
+ * @returns 
+ */
 export async function getStaticProps() {
-  const result = await fetch('https://orihon.vercel.app/api/category');
-  const categories = await result.json();
+  const categories = await getCategoryList();
   
   return {
     props: {
