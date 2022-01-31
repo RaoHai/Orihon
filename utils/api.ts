@@ -1,16 +1,5 @@
+import type { Category, SubCategory } from "../pages/api/category";
 
-export interface Category {
-  title: string;
-  abbreviation: string;
-  'short-title-zh': string;
-  'title-zh': string;
-  volumes: number;
-}
-
-export interface SubCategory {
-  name: string;
-  path: string;
-}
 
 export async function getCategoryList(): Promise<Record<string, Category>> {
   const result = await fetch('https://orihon.vercel.app/api/category');

@@ -1,7 +1,7 @@
-import { getCategoryList, getSubCategoryById, SubCategory } from "../../utils/api";
+import { getCategoryList, getSubCategoryById } from "../../utils/api";
+import type { SubCategory } from "../api/category";
 
 export default function CategoryByIdPage({ subCategories }: { subCategories: SubCategory[];}) {
-  console.log('---> subCategories', subCategories);
   return (
     <>
       <h2>二级目录</h2>
