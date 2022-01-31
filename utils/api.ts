@@ -9,5 +9,9 @@ export async function getCategoryList(): Promise<Record<string, Category>> {
 
 export async function getSubCategoryById(id: string): Promise<SubCategory[]> {
   const result = await fetch(`https://orihon-mdolatzn2-luchen.vercel.app/api/category/${id}`);
+  // 万一没有
+  if (result.status === 404) {
+    return [];
+  }
   return await result.json();
 }
