@@ -1,4 +1,4 @@
-import { getCategoryList, getSubCategoryById, SubCategory } from "../utils/api";
+import { getCategoryList, getSubCategoryById, SubCategory } from "../../utils/api";
 
 export default function CategoryByIdPage({ subCategories }: { subCategories: SubCategory[];}) {
   console.log('---> subCategories', subCategories);
