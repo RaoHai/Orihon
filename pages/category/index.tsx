@@ -36,11 +36,13 @@ export default function Menu({ categories = {} }: MenuProps) {
  * @returns 
  */
 export async function getStaticProps() {
-  const categories = await getCategoryList();
+  const endpoint = process.env.VERCEL_URL || 'https://orihon.vercel.app';
+  const categories = await getCategoryList(endpoint);
   
   return {
     props: {
       categories,
+      endpoint,
     },
   };
 }
