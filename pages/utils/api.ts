@@ -1,4 +1,3 @@
-import { Octokit } from "octokit";
 
 export interface Category {
   title: string;

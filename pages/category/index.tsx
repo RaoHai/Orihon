@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Category, getCategoryList } from "./utils/api";
+import { Category, getCategoryList } from "../utils/api";
 
 
 export interface MenuProps {
