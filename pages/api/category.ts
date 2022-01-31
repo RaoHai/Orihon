@@ -26,7 +26,7 @@ export default async function listCategories(_req: VercelRequest, res: VercelRes
   const cbetaRepoContent = await octokit.rest.repos.getContent({
     owner: 'cbeta-org',
     repo: 'xml-p5',
-    path: '/',
+    path: '',
   });
 
   const folders = (cbetaRepoContent.data as SubCategory[]).filter((d => d.type === 'dir')).map(d => d.name);
