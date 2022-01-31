@@ -10,9 +10,8 @@ export default function CategoryByIdPage({ subCategories }: { subCategories: Sub
 }
 
 export async function getStaticProps({ params }: { params: { id: string } }) {
-  const endpoint = process.env.VERCEL_URL || 'https://orihon.vercel.app';
   const { id } = params;
-  const subCategories = await getSubCategoryById(endpoint, id);
+  const subCategories = await getSubCategoryById(id);
 
   return {
     props: {
@@ -25,8 +24,7 @@ export async function getStaticProps({ params }: { params: { id: string } }) {
  * generate secondary category pages
  */
 export async function getStaticPaths() {
-  const endpoint = process.env.VERCEL_URL || 'https://orihon.vercel.app';
-  const categories = await getCategoryList(endpoint);
+  const categories = await getCategoryList();
  
   const paths = Object.keys(categories).map(key => ({ params: { id: key } }));
 
