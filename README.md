@@ -10,3 +10,9 @@ A Unofficial Cbeta Staticization Project.
     <img alt="" src="https://badgen.net/github/license/RaoHai/orihon">
   </a>
 </p>
+
+
+<h2 align="center">Special Thanks to</h2>
+<p align="center">(In chronological order)</p>
+- [cbeta-org / xml-p5](https://github.com/cbeta-org/xml-p5)
+- [赫蹏（hètí）](https://github.com/sivan/heti) for the great inspiration.
