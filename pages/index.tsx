@@ -7,11 +7,6 @@ import styles from '../styles/Home.module.css'
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Orihon (经折，Traditional Chinese: 經摺)</title>
-        <meta name="description" content="An Unofficial Cbeta Staticization Project" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
