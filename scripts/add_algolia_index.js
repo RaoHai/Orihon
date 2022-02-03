@@ -1,5 +1,6 @@
-import { config } from 'dotenv';
-import algoliasearch from 'algoliasearch/lite';
+'use strict';
+const { config } = require('dotenv');
+const algoliasearch = require('algoliasearch/lite');
 
 async function main() {
   config();
