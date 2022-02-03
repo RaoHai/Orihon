@@ -1,4 +1,5 @@
 'use strict';
+const fetch = require('node-fetch');
 const { config } = require('dotenv');
 const algoliasearch = require('algoliasearch/lite');
 
@@ -16,6 +17,7 @@ const algoliasearch = require('algoliasearch/lite');
       };
     });
 
+    console.log('--> transformed', transformed);
     const client = algoliasearch(
       process.env.ALGOLIA_APP_ID,
       process.env.ALGOLIA_ADMIN_KEY,
@@ -30,7 +32,7 @@ const algoliasearch = require('algoliasearch/lite');
       )}`,
     );
   } catch (err) {
-    console.err('Fetch Category Failed', err);
+    console.error('Fetch Category Failed', err);
   }
 })();
 
