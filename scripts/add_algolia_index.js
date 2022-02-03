@@ -2,7 +2,7 @@
 const { config } = require('dotenv');
 const algoliasearch = require('algoliasearch/lite');
 
-async function main() {
+(async () => {
   config();
   console.log('--> constructing algolia index');
   try {
@@ -32,6 +32,5 @@ async function main() {
   } catch (err) {
     console.err('Fetch Category Failed', err);
   }
-}
+})();
 
-await main();
