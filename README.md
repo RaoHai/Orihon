@@ -11,6 +11,12 @@ A Unofficial Cbeta Staticization Project.
   </a>
 </p>
 
+<h2 align="center">Deploy Guide</h2>
+
+### Enviroment Variables
+* `process.env.GITHUB_ACCESS_TOKEN` Github Access Token to read github repo contents
+* `process.env.ALGOLIA_APP_ID` [Algolia](https://www.algolia.com/) Application ID to implements search.
+* `process.env.ALGOLIA_ADMIN_KEY` [Algolia](https://www.algolia.com/) Admin API Key to 
 
 <h2 align="center">Special Thanks to</h2>
 <p align="center">(In chronological order)</p>
