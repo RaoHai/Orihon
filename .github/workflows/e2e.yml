@@ -23,9 +23,7 @@ jobs:
         env:
           ALGOLIA_APP_ID: ${{secrets.ALGOLIA_APP_ID}}
           ALGOLIA_CLIENT_KEY: ${{secrets.ALGOLIA_CLIENT_KEY}}
-        run: 
-          echo "The ALGOLIA_APP_ID key is:${{secrets.ALGOLIA_APP_ID}}"   
-          yarn build
+        run: yarn build
 
       - name: Save build folder
         uses: actions/upload-artifact@v2
