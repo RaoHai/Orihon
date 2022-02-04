@@ -41,3 +41,5 @@ cypress/videos
 cypress/screenshots
 
 config/env.local.js
+
+.env.local

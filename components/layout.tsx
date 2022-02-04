@@ -1,13 +1,6 @@
-import { useMemo } from 'react';
 import Head from 'next/head';
-import algoliasearch from 'algoliasearch/lite';
-import Search from './search';
 
-
-export default function Layout({ children, appId = '', apiKey = '' }: { children: React.ReactNode; appId?: string; apiKey?: string; }) {
-  const searchClient = useMemo(() => {
-    return algoliasearch(appId, apiKey);
-  }, [apiKey, appId]);
+export default function Layout({ children }: { children: React.ReactNode; }) {
 
   return (
     <>
@@ -17,22 +10,10 @@ export default function Layout({ children, appId = '', apiKey = '' }: { children
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Search searchClient={searchClient} />
+        <header className='flex'>
+        </header>
         {children}
       </div>
     </>
   );
-}
-
-/**
- * genrate category menus
- * @returns 
- */
- export async function getStaticProps() {  
-  return {
-    props: {
-      appId: process.env.ALGOLIA_APP_ID,
-      apiKey: process.env.ALGOLIA_CLIENT_KEY
-    },
-  };
 }

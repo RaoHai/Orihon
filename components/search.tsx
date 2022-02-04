@@ -5,9 +5,16 @@ import {
   Configure,
   Highlight,
   InstantSearch,
+  SearchBox,
 } from 'react-instantsearch-dom';
 import type { Category } from '../pages/api/category';
 import type { SearchClient } from 'algoliasearch/lite';
+
+// Include only the reset
+import 'instantsearch.css/themes/reset.css';
+// or include the full Satellite theme
+import 'instantsearch.css/themes/satellite.css';
+
 
 export function HitComponent({ hit }: { hit: Hit<Category> }) {
   return (
@@ -38,14 +45,7 @@ export default function Search({ searchClient }: AlgoliaSearchProps) {
       indexName='cbeta_category'
     >
       <Configure hitsPerPage={12} />
-      <main>
-          <div className="menu">
-            <RefinementList attribute="categories" />
-          </div>
-          <div className="results">
-            <Hits hitComponent={HitComponent} />
-          </div>
-        </main>
+      <SearchBox />
     </InstantSearch>
   );
 }

@@ -1,51 +1,61 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
+import algoliasearch from 'algoliasearch/lite';
 import Image from 'next/image'
 import Link from 'next/link'
+import { useMemo } from 'react'
+import Search from '../components/search';
+import { getCategoryList } from '../utils/api';
 import styles from '../styles/Home.module.css'
+import { Category } from './api/category';
 
-const Home: NextPage = () => {
+
+
+const Home: NextPage<{ appId: string; apiKey: string; categories: Record<string, Category>; }> = ({ appId, apiKey, categories }) => {
+  const searchClient = useMemo(() => {
+    return algoliasearch(appId, apiKey);
+  }, [apiKey, appId]);
+
   return (
     <div className={styles.container}>
-
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Orihon / 經摺
-        </h1>
+        
+        <div className="mx-auto my-24 px-8 pt-12 pb-24 bg-white rounded-md shadow-lg">
 
-        <p className={styles.description}>
-          An Unofficial Cbeta Staticization Project.
-        </p>
-
-        <div className={styles.grid}>
-          <div className={styles.card}>
-            <Link href="/category">
-              <h2>目录 &rarr;</h2>
-            </Link>
+          <div className="mb-8 w-48">
+            <Search searchClient={searchClient} />
           </div>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+          <div className="category">
+            <h1 className='ml-8'>
+              Orihon / 經摺
+            </h1>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+            <div className="border-solid border-inherit border-r-4">
+              <div className="border-2 page-grid">
+                <h2 className="text-left text-2xl">
+                  册别目录
+                </h2>
+                <nav>
+                  <div>&nbsp;</div>
+                  {Object.keys(categories).map(key => {
+                    const category = categories[key];
+                    const { title, abbreviation } = category;
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+                    return (
+                      <div key={title} className="py-2">
+                        <Link href={`/category/${key}`} passHref>
+                          <span>
+                            <em className="not-italic font-mono text-base" style={{ writingMode: 'initial' }}>{key}</em>
+                            {category['title-zh'] || title}
+                          </span>
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </nav>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
@@ -64,5 +74,21 @@ const Home: NextPage = () => {
     </div>
   )
 }
+
+/**
+ * genrate category menus
+ * @returns 
+ */
+ export async function getStaticProps() {  
+  const categories = await getCategoryList();
+  return {
+    props: {
+      appId: process.env.ALGOLIA_APP_ID,
+      apiKey: process.env.ALGOLIA_CLIENT_KEY,
+      categories,
+    },
+  };
+}
+
 
 export default Home
