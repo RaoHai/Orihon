@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode; }) {
+
   return (
     <>
       <Head>
@@ -9,6 +10,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
+        <header className='flex'>
+        </header>
         {children}
       </div>
     </>
