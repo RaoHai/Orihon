@@ -7,6 +7,6 @@ describe('Navigation', () => {
 
   it('should have search component', () => {
     cy.visit('http://localhost:3000/');
-    cy.get('#autocomplete').contains('.aa-Autocomplete');
+    cy.get('#autocomplete').get('.aa-Autocomplete').should('exist');
   });
 });
