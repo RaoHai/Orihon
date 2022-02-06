@@ -1,4 +1,4 @@
-import { Hit } from 'react-instantsearch-core';
+import { Hit } from '@algolia/client-search';
 import { Category } from '../pages/api/category';
 
 export type CategoryRecord = Category & {

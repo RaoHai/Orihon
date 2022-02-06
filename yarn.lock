@@ -19,14 +19,6 @@
     "@algolia/autocomplete-shared" "1.5.2"
     preact "^10.0.0"
 
-"@algolia/autocomplete-plugin-algolia-insights@^1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-plugin-algolia-insights/-/autocomplete-plugin-algolia-insights-1.5.2.tgz#65afdf7adcdf23ed20547908c89dfcbc72eb8391"
-  integrity sha512-2NXT0QQX87JL0NJ4kgWSaxIWVNNkXhZZB/tTEl6JlWmiPvvUnCxE26cfuQOCMP6bFWSoVZ9M8ynxqY5ZrxCghA==
-  dependencies:
-    "@algolia/autocomplete-js" "1.5.2"
-    "@algolia/autocomplete-shared" "1.5.2"
-
 "@algolia/autocomplete-plugin-query-suggestions@^1.5.2":
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/@algolia/autocomplete-plugin-query-suggestions/-/autocomplete-plugin-query-suggestions-1.5.2.tgz#6fecac540886d97743960a972011104aec18ca09"
