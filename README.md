@@ -20,7 +20,19 @@ A Unofficial Cbeta Staticization Project.
 * 📦 Out of the Box, Orihon has build-in cbeta documents and font rendering. No additional content needs to be downloaded.
 * 🚀 Self hosted supported. Supporting 1-click-hosting on vercel.
 
-<h2>Self hosted Guide</h2>
+<h2>Run Local</h2>
+
+Create `.env.local` at root directory of repository:
+
+```
+ALGOLIA_APP_ID="{{YOUR ALGOLIA APP ID}}"
+ALGOLIA_CLIENT_KEY="{{YOUR ALGOLIA QUERY KEY}}"
+```
+
+Then run `yarn dev`, open `http://localhost:3000/`.
+
+
+<h2>Self-hosted Guide</h2>
 
 ### Enviroment Variables
 * `process.env.GITHUB_ACCESS_TOKEN` Github Access Token to read github repo contents

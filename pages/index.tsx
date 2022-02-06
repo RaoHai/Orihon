@@ -9,7 +9,6 @@ import styles from '../styles/Home.module.css'
 import { Category } from './api/category';
 
 
-
 const Home: NextPage<{ appId: string; apiKey: string; categories: Record<string, Category>; }> = ({ appId, apiKey, categories }) => {
   const searchClient = useMemo(() => {
     return algoliasearch(appId, apiKey);
@@ -21,7 +20,7 @@ const Home: NextPage<{ appId: string; apiKey: string; categories: Record<string,
         
         <div className="mx-auto my-24 px-8 pt-12 pb-24 bg-white rounded-md shadow-lg">
 
-          <div className="mb-8 w-48">
+          <div className="mb-8 w-72">
             <Search searchClient={searchClient} />
           </div>
 
