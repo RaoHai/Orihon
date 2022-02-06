@@ -1,8 +1,10 @@
-import { createElement, Fragment, useEffect, useMemo } from 'react';
+import { createElement, Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { render } from 'react-dom';
 import {
   autocomplete,
+  AutocompleteApi,
   AutocompleteComponents,
+  AutocompleteState,
 } from '@algolia/autocomplete-js';
 import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query-suggestions';
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
@@ -43,6 +45,7 @@ const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
 });
 
 export default function Search({ searchClient }: AlgoliaSearchProps) {
+  const [_, setAutoCompleteState] = useState<AutocompleteState<{}>>();
   const querySuggestionsPlugin = useMemo(() => 
     createQuerySuggestionsPlugin<CategoryHit>({
       searchClient,
@@ -65,21 +68,40 @@ export default function Search({ searchClient }: AlgoliaSearchProps) {
       }
     }), [searchClient]);
 
+  const autoCompleteRef = useRef<AutocompleteApi<{}>>();
+  const inputOnBlur = useCallback(() => {
+    if (autoCompleteRef.current) {
+      autoCompleteRef.current.setIsOpen(false);
+    }
+  }, []);
+
   useEffect(() => {
-    autocomplete<{}>({
-      container: '#autocomplete',
-      placeholder: 'Search',
-      debug: true,
-      openOnFocus: true,
-      renderer: { createElement, Fragment },
-      render({ children }, root) {
-        render(children as React.DOMElement<any, any>, root);
-      },
-      plugins: [
-        querySuggestionsPlugin
-      ],
-    });
-  }, [querySuggestionsPlugin]);
+    if (!autoCompleteRef.current) {
+      autoCompleteRef.current = autocomplete<{}>({
+        container: '#autocomplete',
+        placeholder: 'Search',
+        debug: true,
+        openOnFocus: true,
+        renderer: { createElement, Fragment },
+        render({ children }, root) {
+          render(children as React.DOMElement<any, any>, root);
+        },
+        getInputProps({ props }) {
+          return { ...props, onBlur: inputOnBlur };
+        },
+        onStateChange({ state }) {
+          setAutoCompleteState(state);
+        },
+        plugins: [
+          querySuggestionsPlugin
+        ],
+      });
+    }
+
+    return () => {
+      autoCompleteRef.current?.destroy();
+    };
+  }, [inputOnBlur, querySuggestionsPlugin]);
 
   return (<div id="autocomplete" />);
 }
