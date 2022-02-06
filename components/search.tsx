@@ -1,33 +1,34 @@
-import { Hit } from 'react-instantsearch-core';
+import { createElement, Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { render } from 'react-dom';
 import {
-  RefinementList,
-  Hits,
-  Configure,
-  Highlight,
-  InstantSearch,
-  SearchBox,
-} from 'react-instantsearch-dom';
-import type { Category } from '../pages/api/category';
+  autocomplete,
+  AutocompleteApi,
+  AutocompleteComponents,
+  AutocompleteState,
+} from '@algolia/autocomplete-js';
+import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query-suggestions';
+import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
+
 import type { SearchClient } from 'algoliasearch/lite';
+import type { CategoryHit } from '../types/CategoryHit';
 
-// Include only the reset
-import 'instantsearch.css/themes/reset.css';
-// or include the full Satellite theme
-import 'instantsearch.css/themes/satellite.css';
+import '@algolia/autocomplete-theme-classic';
 
+export 
+type CategoryItemProps = {
+  hit: CategoryHit;
+  components: AutocompleteComponents;
+}
 
-export function HitComponent({ hit }: { hit: Hit<Category> }) {
+export function CategoryComponent({ hit, components }: CategoryItemProps) {
   return (
     <div className="hit">
       <div className="hit-content">
-        <div>
-          <Highlight attribute="title" hit={hit} />
-        </div>
-        <div className="hit-type">
-          <Highlight attribute="abbreviation" hit={hit} />
-        </div>
         <div className="hit-description">
-          <Highlight attribute="title-zh" hit={hit} />
+          <span className="hit-type">
+            {hit.abbreviation}
+          </span>
+          <components.Snippet hit={hit} attribute="title-zh" />
         </div>
       </div>
     </div>
@@ -38,14 +39,70 @@ export interface AlgoliaSearchProps {
   searchClient: SearchClient;
 }
 
+const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
+  key: 'search',
+  limit: 3,
+});
+
 export default function Search({ searchClient }: AlgoliaSearchProps) {
-  return (
-    <InstantSearch
-      searchClient={searchClient}
-      indexName='cbeta_category'
-    >
-      <Configure hitsPerPage={12} />
-      <SearchBox />
-    </InstantSearch>
-  );
+  const [_, setAutoCompleteState] = useState<AutocompleteState<{}>>();
+  const querySuggestionsPlugin = useMemo(() => 
+    createQuerySuggestionsPlugin<CategoryHit>({
+      searchClient,
+      indexName: 'cbeta_category',
+      getSearchParams({ state }) {
+        return recentSearchesPlugin.data?.getAlgoliaSearchParams({
+          clickAnalytics: true,
+          hitsPerPage: state.query ? 5 : 10,
+        })!;
+      },
+      transformSource({ source }) {
+        return {
+          ...source,
+          templates: {
+            item({ item, components }) {
+              return <CategoryComponent hit={item} components={components} />
+            }
+          }
+        };
+      }
+    }), [searchClient]);
+
+  const autoCompleteRef = useRef<AutocompleteApi<{}>>();
+  const inputOnBlur = useCallback(() => {
+    if (autoCompleteRef.current) {
+      autoCompleteRef.current.setIsOpen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!autoCompleteRef.current) {
+      autoCompleteRef.current = autocomplete<{}>({
+        container: '#autocomplete',
+        placeholder: 'Search',
+        debug: true,
+        openOnFocus: true,
+        renderer: { createElement, Fragment },
+        render({ children }, root) {
+          render(children as React.DOMElement<any, any>, root);
+        },
+        getInputProps({ props }) {
+          return { ...props, onBlur: inputOnBlur };
+        },
+        onStateChange({ state }) {
+          setAutoCompleteState(state);
+        },
+        plugins: [
+          querySuggestionsPlugin
+        ],
+      });
+    }
+
+    return () => {
+      autoCompleteRef.current?.destroy();
+    };
+  }, [inputOnBlur, querySuggestionsPlugin]);
+
+  return (<div id="autocomplete" />);
 }
+
