@@ -1,6 +1,6 @@
 # Orihon (经折，Traditional Chinese: 經摺)
 
-A Unofficial Cbeta Staticization Project.
+A Unofficial Cbeta Staticization Project..
 
 <p align="center">
   <a aria-label="Vercel logo" href="https://vercel.com">
